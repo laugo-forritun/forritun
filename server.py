@@ -91,7 +91,7 @@ def on_received_value(name, value):
     challenge = map_get(challenge_id, ID)
     prog = map_get(progress, ID)
     answer = answers[challenge][prog]
-    if abs(answer - value) < EPSILON:
+    if abs(answer ^ SECRET_KEY - value) < EPSILON:
         # Increment progress
         map_put(progress, ID, prog+1)
         led.plot(prog%5, prog/5)
@@ -126,6 +126,7 @@ forever(on_forever)
 ###########################################
 radio.set_group(1)
 
+SECRET_KEY = 123456789
 BIG_PRIME = 946290599
 EPSILON = 0.01
 DEFAULT_MAP_SIZE = 100
@@ -139,14 +140,19 @@ bits: List[number] = []
 ### TO FIT YOUR CHALLENGES              ###
 ###########################################
 challenges: List[List[number]] = [
-    [-1], # Challenge 0
+    [ # Challenge 0
+     50,
+     2345, 6789, 124, 5876, 123, 4857, 6341, 587, 1304, 7613, 5497, 8013, 2457, 8960, 1874, 5601, 3422, 3456, 7890, 1245, 8760, 1234, 8576, 3410, 5871, 3047, 6135, 4978, 132, 4578, 9601, 8745, 6013, 4223, 4567, 8901, 2458, 7601, 2348, 5763, 4105, 8713, 476, 1354, 9780, 1324, 5789, 6018, 7456, 134,
+    ],
     [-1], # Challenge 1
     [-1], # challenge 2
     [-1], # challenge 3
     [-1], # challenge 4
 ]
 answers: List[List[number]] = [
-    [-1], # answer 0
+    [ # answer 0
+     452390407,
+    ],
     [-1], # answer 1
     [-1], # answer 2
     [-1], # answer 3
