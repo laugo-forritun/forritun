@@ -29,6 +29,7 @@ def map_get(m: List[number], k: number):
     return m[hashed_key]
 def map_init(size: number):
     """ Initialize a map of size `size` """
+    """
     size += 1 # Off by 1 in size, otherwise
     _chunks = [[0]]
     while len(_chunks[len(_chunks)-1])*10 < size:
@@ -41,6 +42,10 @@ def map_init(size: number):
     for chunk in _chunks:
         while len(_a)+len(chunk) < size:
             _a = _a + chunk
+    """
+    _a = [0]
+    for _ in range(size):
+        _a.push(0)
     print("Initialized a map with size " + len(_a))
     return _a
 
@@ -91,7 +96,7 @@ def on_received_value(name, value):
     challenge = map_get(challenge_id, ID)
     prog = map_get(progress, ID)
     answer = answers[challenge][prog]
-    if abs(answer ^ SECRET_KEY - value) < EPSILON:
+    if abs((answer ^ SECRET_KEY) - value) < EPSILON:
         # Increment progress
         map_put(progress, ID, prog+1)
         led.plot(prog%5, prog/5)
@@ -108,18 +113,6 @@ def on_received_value(name, value):
 
     # Show packet transmission rate
     led.toggle(3,4)
-
-radio.on_received_value(on_received_value)
-
-
-# Show the server is running
-def on_forever():
-    """ Prove server is running """
-    led.toggle(4,4)
-    for i in range(len(bits)):
-        led.toggle(i%5,i/5)
-    basic.pause(250)
-forever(on_forever)
 
 
 
@@ -160,3 +153,15 @@ answers: List[List[number]] = [
     [-1], # answer 3
     [-1], # answer 4
 ]
+
+
+# Show the server is running
+def on_forever():
+    """ Prove server is running """
+    led.toggle(4,4)
+    for i in range(len(bits)):
+        led.toggle(i%5,i/5)
+    basic.pause(250)
+
+forever(on_forever)
+radio.on_received_value(on_received_value)
