@@ -116,6 +116,8 @@ radio.on_received_value(on_received_value)
 def on_forever():
     """ Prove server is running """
     led.toggle(4,4)
+    for i in range(len(bits)):
+        led.toggle(i%5,i/5)
     basic.pause(250)
 forever(on_forever)
 
