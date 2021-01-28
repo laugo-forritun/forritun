@@ -5,13 +5,13 @@ Code snippets/programs for teaching programming on BBC:MicroBit
 
 ## Problems
 
-0. Given a line of N numbers, what is the supremun?
+0. Given a line of N positive integers, what is the supremun?
 	- Input:
 		N, then N numbers
 	- Output:
 		The largest of the N numbers
 
-1. Given a line of N numbers, what is the infimum?
+1. Given a line of N positive integers, what is the infimum?
 	- Input:
 		N, then N numbers
 	- Output:
