@@ -50,11 +50,13 @@ def on_received_value(name, value):
     # Select challenge
     if challenge == -1:
         led.toggle(3,0)
+        progress = 0
         challenge = value
         # Send all challenge numbers
         for x in challenges[challenge]:
             led.toggle(0,4)
             send(ID, x)
+            pause(50)
         return
 
     # Increment progress, or terminate in loss
